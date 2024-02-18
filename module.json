@@ -1,31 +1,36 @@
 {
-  "id": "module",
-  "title": "New Module",
-  "description": "",
+  "id": "lancer-alt-structure",
+  "title": "LANCER Alternative Structure",
+  "description": "Implements alternative structure rulesets for Lancer",
   "version": "#{VERSION}#",
   "library": "false",
   "manifestPlusVersion": "1.2.0",
   "compatibility": {
     "minimum": 10,
-    "verified": 10,
-    "maximum": 11
+    "verified": 10
   },
   "authors": [
     {
-      "name": "The League of Extraordinary FVTT Developers",
-      "url": "https://github.com/League-of-Foundry-Developers",
-      "discord": "discordID#0001"
+      "name": "BadIdeasBureau",
+      "url": "https://github.com/BadIdeasBureau",
+      "discord": "badideasbureau"
     }
   ],
   "relationships": {
     "systems": [],
-    "requires": []
+    "requires": [{
+      "id": "lib-wrapper",
+      "type": "module",
+      "compatibility": {
+          "minimum": "1.0.0.0",
+          "verified": "1.12.6.0"
+      }
+  }]
   },
   "esmodules": [
     "scripts/module.js"
   ],
   "scripts": [
-    "scripts/lib/lib.js"
   ],
   "styles": [
     "styles/module.css"
