@@ -17,7 +17,10 @@
     }
   ],
   "relationships": {
-    "systems": [],
+    "systems": [{
+    "id": "lancer",
+    "type": "system"
+    }],
     "requires": [{
       "id": "lib-wrapper",
       "type": "module",
