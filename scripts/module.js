@@ -1,5 +1,3 @@
-let originalRollStructure;
-
 const structTableTitles = [
   "Crushing Hit",
   "Direct Hit",
@@ -42,25 +40,56 @@ const getRollCount = (roll, num_to_count) => {
 };
 
 async function altRollStructure(state) {
-  if (!originalRollStructure(state)) {
+  if (!state.data) throw new TypeError(`Structure roll flow data missing!`);
+  const actor = state.actor;
+  if (!actor.is_mech() && !actor.is_npc()) {
+    ui.notifications.warn("Only npcs and mechs can roll structure.");
     return false;
   }
 
-  if (!state.data) throw new TypeError(`Structure roll flow data missing!`);
-
-  let result = state.data.result;
-  let remStruct = state.data.remStruct;
-
   if (
-    result === null ||
-    result === undefined ||
-    remStruct === null ||
-    remStruct === undefined
-  )
-    throw new TypeError("Roll and Structure flow data missing!");
+    (state.data?.reroll_data?.structure ?? actor.system.structure.value) >=
+    actor.system.structure.max
+  ) {
+    ui.notifications.info(
+      "The mech is at full Structure, no structure check to roll."
+    );
+    return false;
+  }
 
-  state.data.title = structTableTitles[result];
-  state.data.desc = structTableDescriptions(result, remStruct);
+  let remStruct =
+    state.data?.reroll_data?.structure ?? actor.system.structure.value;
+  let damage = actor.system.structure.max - remStruct;
+  let formula = `${damage}d6kl1`;
+  // If it's an NPC with legendary, change the formula to roll twice and keep the best result.
+  if (
+    actor.is_npc() &&
+    actor.items.some((i) =>
+      ["npcf_legendary_ultra", "npcf_legendary_veteran"].includes(i.system.lid)
+    )
+  ) {
+    formula = `{${formula}, ${formula}}kh`;
+  }
+  let roll = await new Roll(formula).evaluate({ async: true });
+
+  let result = roll.total;
+  if (result === undefined) return false;
+
+  state.data = {
+    type: "structure",
+    title: structTableTitles[result],
+    desc: structTableDescriptions(result, remStruct),
+    remStruct: remStruct,
+    val: actor.system.structure.value,
+    max: actor.system.structure.max,
+    roll_str: roll.formula,
+    result: {
+      roll: roll,
+      tt: await roll.getTooltip(),
+      total: (roll.total ?? 0).toString(),
+    },
+  };
+
   return true;
 }
 
@@ -178,8 +207,6 @@ async function insertSecondaryRollButton(state) {
 }
 
 Hooks.once("lancer.registerFlows", (flowSteps, flows) => {
-  originalRollStructure = flowSteps.get("rollStructureTable");
-
   flowSteps.set("rollStructureTable", altRollStructure);
   flowSteps.set("checkStructureMultipleOnes", checkMultipleOnes);
   flowSteps.set("structureInsertHullCheckButton", insertHullCheckButton);
