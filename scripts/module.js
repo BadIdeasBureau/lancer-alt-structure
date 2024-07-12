@@ -46,7 +46,7 @@ async function altRollStructure(state) {
     return false;
   }
 
-  result = state.data.result;
+  let result = state.data.result;
 
   state.data.title = structTableTitles[result];
   state.data.desc = structTableDescriptions(result, remStruct);
