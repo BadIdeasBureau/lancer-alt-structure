@@ -46,7 +46,13 @@ async function altRollStructure(state) {
     return false;
   }
 
+  if (!state.data) throw new TypeError(`Structure roll flow data missing!`);
+
   let result = state.data.result;
+  let remStruct = state.data.remStruct;
+
+  if (!result || !remStruct)
+    throw new TypeError("Roll and Structure flow data missing!");
 
   state.data.title = structTableTitles[result];
   state.data.desc = structTableDescriptions(result, remStruct);
