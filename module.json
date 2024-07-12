@@ -6,44 +6,35 @@
   "library": "false",
   "manifestPlusVersion": "1.2.0",
   "compatibility": {
-    "minimum": 10,
-    "verified": 10
+    "minimum": 11,
+    "verified": 11
   },
   "authors": [
     {
       "name": "BadIdeasBureau",
       "url": "https://github.com/BadIdeasBureau",
       "discord": "badideasbureau"
+    },
+    {
+      "name": "Kaffo",
+      "url": "https://github.com/kaffo/",
+      "discord": "kaffo"
     }
   ],
   "relationships": {
     "systems": [{
     "id": "lancer",
-    "type": "system"
-    }],
-    "requires": [{
-      "id": "lib-wrapper",
-      "type": "module",
-      "compatibility": {
-          "minimum": "1.0.0.0",
-          "verified": "1.12.6.0"
-      }
-  }]
+    "type": "system",
+    "compatibility": {
+      "minimum": "2.0.0"
+    }
+    }]
   },
+  "system": [
+    "lancer"
+  ],
   "esmodules": [
     "scripts/module.js"
-  ],
-  "scripts": [
-  ],
-  "styles": [
-    "styles/module.css"
-  ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
   ],
   "url": "#{URL}#",
   "manifest": "#{MANIFEST}#",
