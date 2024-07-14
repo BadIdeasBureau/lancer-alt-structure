@@ -1,5 +1,7 @@
 
-const structTableTitles = [
+let structTableTitles = []
+
+Hooks.on("i18nInit", () => structTableTitles = [
   game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.crushingHit"),
   game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.directHit"),
   game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.systemTrauma"),
@@ -7,7 +9,8 @@ const structTableTitles = [
   game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.systemTrauma"),
   game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.glancingBlow"),
   game.i18n.localize("LANCER-ALT-STRUCTURE.StructureTitles.glancingBlow"),
-];
+])
+
 function structTableDescriptions(roll, remStruct) {
   switch (roll) {
     // Used for multiple ones

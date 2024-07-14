@@ -1,5 +1,6 @@
 
-const stressTableTitles = [
+let stressTableTitles = []
+Hooks.on("i18nInit", () => stressTableTitles = [
     game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.criticalFail"),
     game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.meltdown"),
     game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.powerFail"),
@@ -7,7 +8,7 @@ const stressTableTitles = [
     game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.powerFail"),
     game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.emergencyShunt"),
     game.i18n.localize("LANCER-ALT-STRUCTURE.StressTitles.emergencyShunt"),
-  ];
+  ])
   function stressTableDescriptions(roll, remStress) {
     switch (roll) {
       // Used for multiple ones
@@ -129,7 +130,7 @@ const stressTableTitles = [
   
     let one_count = getRollCount(roll, 1);
   
-    if (show_button || one_count > 1) {
+    if (show_button && !(one_count > 1)) {
       state.data.embedButtons = state.data.embedButtons || [];
       state.data.embedButtons.push(`<a
             class="flow-button lancer-button"
