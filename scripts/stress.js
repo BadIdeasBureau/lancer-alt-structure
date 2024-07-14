@@ -134,7 +134,7 @@ const stressTableTitles = [
       state.data.embedButtons.push(`<a
             class="flow-button lancer-button"
             data-flow-type="check"
-            data-check-type="eng"
+            data-check-type="engineering"
             data-actor-id="${actor.uuid}"
           >
             <i class="fas fa-dice-d20 i--sm"></i> ENGINEERING
