@@ -45,6 +45,23 @@ Hooks.on("i18nInit", () => stressTableTitles = [
       ui.notifications.warn("Only npcs and mechs can roll stress.");
       return false;
     }
+
+    // Skip this step for 1-stress NPCs.
+    if (actor.is_npc() && actor.system.stress.max === 1) {
+      const one_roll = 3
+      const one_stress = 1
+      state.data = {
+        type: "stress",
+        title: stressTableTitles[one_roll],
+        desc: stressTableDescriptions(one_roll, one_stress),
+        remStress: one_stress,
+        val: actor.system.stress.value,
+        max: actor.system.stress.max,
+        roll_str: String(one_roll),
+        result: undefined,
+      };
+      return true;
+    }
   
     if ((state.data?.reroll_data?.stress ?? actor.system.stress.value) >=
       actor.system.stress.max) {
